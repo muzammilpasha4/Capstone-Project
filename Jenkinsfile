@@ -3,13 +3,7 @@ pipeline {
     tools {
         nodejs 'Node-js'
     }
-    stages {
-        stage('docker credentials') {
-            steps {
-                withCredentials([usernamePassword(credentialsId: 'github_credentials', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-    // Jenkins steps that require credentials go here
-                }
-            }
+
     stages {
         stage('checkout') {
             steps {
@@ -47,7 +41,7 @@ pipeline {
                 script {
                     def dockerCmd = 'docker run -itd --name My-first-container -p 80:5000 muzammilp/dev:latest'
                     sshagent(['sshkeypair']) {
-                        sh "ssh -o StrictHostKeyChecking=no ubuntu@107.23.155.85 ${dockerCmd}"
+                        sh "ssh -o StrictHostKeyChecking=no ubuntu@172.31.30.29 ${dockerCmd}"
                     }
                 }
             }
