@@ -6,6 +6,13 @@ pipeline {
     stages {
         stage('checkout') {
             steps {
+                withCredentials([usernamePassword(credentialsId: 'github_credentials', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+    // Jenkins steps that require credentials go here
+                }
+            }
+    stages {
+        stage('checkout') {
+            steps {
                 git url:'https://github.com/muzammilpasha4/Capstone-Project/'
             }
         }
