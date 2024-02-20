@@ -4,7 +4,7 @@ pipeline {
         nodejs 'Node-js'
     }
     stages {
-        stage('checkout') {
+        stage('docker credentials') {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'github_credentials', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
     // Jenkins steps that require credentials go here
