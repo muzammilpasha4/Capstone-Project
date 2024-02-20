@@ -6,7 +6,7 @@ pipeline {
     stages {
         stage('checkout') {
             steps {
-                git url:'https://github.com/akshu20791/Capstone-Project/'
+                git url:'https://github.com/muzammilpasha4/Capstone-Project/'
             }
         }
         stage('Build') {
@@ -24,23 +24,23 @@ pipeline {
         stage('Build Image') {
             steps {
                 sh 'docker build -t reactimage .'
-                sh 'docker tag reactimage:latest akshu20791/dev:latest'
+                sh 'docker tag reactimage:latest muzammilp/dev:latest'
             }
         }
         stage('Docker login') {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'dockercred', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
                     sh "echo $PASS | docker login -u $USER --password-stdin"
-                    sh 'docker push akshu20791/dev:latest'
+                    sh 'docker push muzammilp/dev:latest'
                 }
             }
         }
         stage('Deploy') {
             steps {
                 script {
-                    def dockerCmd = 'docker run -itd --name My-first-container -p 80:5000 akshu20791/dev:latest'
+                    def dockerCmd = 'docker run -itd --name My-first-container -p 80:5000 muzammilp/dev:latest'
                     sshagent(['sshkeypair']) {
-                        sh "ssh -o StrictHostKeyChecking=no ubuntu@51.20.192.244 ${dockerCmd}"
+                        sh "ssh -o StrictHostKeyChecking=no ubuntu@107.23.155.85 ${dockerCmd}"
                     }
                 }
             }
